@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from connect import s3Connect
+from archive import Archive
 
 import os
 import argparse
@@ -100,7 +101,8 @@ if __name__ == '__main__':
     conn = s3Connect()
 
     if args.archive:
-        ARCHIVE = True
+        archive = Archive(conn, SERVICE_NAME=SERVICE_NAME, BUCKET_NAME=BUCKET_NAME, FILE_KEY=FILE_KEY)
+        archive.schedule()
 
     if args.verbose:
         utils.init_logger()

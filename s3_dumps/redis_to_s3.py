@@ -88,10 +88,11 @@ if __name__ == '__main__':
     conn = s3Connect(ACCESS_KEY, SECRET, REGION)
 
     if args.archive:
-        ARCHIVE = True
+        archive = Archive(conn, SERVICE_NAME=SERVICE_NAME, BUCKET_NAME=BUCKET_NAME, FILE_KEY=FILE_KEY)
+        archive.schedule()
 
     if args.verbose:
         utils.init_logger()
 
-    if args.backup or args.archive:
+    if args.backup:
         backup()
