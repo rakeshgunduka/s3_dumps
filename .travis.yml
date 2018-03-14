@@ -3,7 +3,7 @@ python:
   - "3.6"
 install:
   - mkdir -p docs/_static
-  - pip install -r s3_dumps/pip-requirements.txt
+  - pip install -r s3_dumps/pip-requirements.py
 script:
   - make lint
 
