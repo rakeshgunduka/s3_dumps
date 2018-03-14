@@ -1,0 +1,9 @@
+language: python
+python:
+  - "3.6"
+install:
+  - mkdir -p docs/_static
+  - pip install -r s3_dumps/pip-requirements.txt
+script:
+  - make lint
+
