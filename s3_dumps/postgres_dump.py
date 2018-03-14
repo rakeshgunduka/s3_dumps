@@ -2,18 +2,19 @@
 
 from datetime import datetime
 from connect import s3Connect
-from utils import init_arguments, init_logger
 
 import os
-import boto3
 import argparse
 import subprocess
+
+import utils
 
 import logging
 import tarfile
 import tempfile
 
 logger = logging.getLogger('s3_backups')
+
 
 def create_db_dump(command, filename):
     """
@@ -45,30 +46,40 @@ def backup():
     now = datetime.now()
     filename = ARCHIVE_NAME + now.strftime('_%Y%m%d_%H%M%S')
     if DB_NAME:
-        command = [POSTGRES_DUMP_CMD, '-Fc', DB_NAME, '-f', DUMP_BASE_DIR + filename + ".sql"]
+        command = [
+            POSTGRES_DUMP_CMD,
+            '-Fc', DB_NAME,
+            '-f', DUMP_BASE_DIR + filename + ".sql"
+        ]
     else:
-        command = [POSTGRES_DUMP_CMD + 'all', '-f', DUMP_BASE_DIR + filename + ".sql"]
+        command = [
+            POSTGRES_DUMP_CMD + 'all',
+            '-f', DUMP_BASE_DIR + filename + ".sql"
+        ]
 
     file_location = create_db_dump(command, filename)
-    file_key = get_file_key(FILE_KEY)
+    file_key = utils.get_file_key(FILE_KEY, filename, ARCHIVE)
 
     conn.upload_file_to_cloud(
         media_location=file_location,
         file_key=file_key,
         service=SERVICE_NAME,
-        bucket=BUCKET_NAME
+        bucket=BUCKET_NAME,
+        DELETE_DUMP=DELETE_DUMP
     )
     logger.info('Sucessfully uploaded the Dump.')
 
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Creates postgres DB dump and stores it to S3 using `pg_dump`.')
-    parser = init_arguments(parser)
+    parser = argparse.ArgumentParser(description='''Creates postgres DB
+                                     dump and stores it to S3 using
+                                     `pg_dump`.''')
+    parser = utils.init_arguments(parser)
 
     parser.add_argument('--ARCHIVE_NAME',
-        default='all_postgres_db',
-        help='The base name for the archive')
+                        default='all_postgres_db',
+                        help='The base name for the archive')
 
     args = parser.parse_args()
 
@@ -83,6 +94,7 @@ if __name__ == '__main__':
     DELETE_DUMP = args.DELETE_DUMP
     DUMP_BASE_DIR = args.DUMP_BASE_DIR
     DUMP_FILE_PATH = args.DUMP_FILE_PATH
+    ARCHIVE_NAME = args.ARCHIVE_NAME
 
     POSTGRES_DUMP_CMD = args.POSTGRES_DUMP_CMD
     conn = s3Connect()
@@ -91,7 +103,7 @@ if __name__ == '__main__':
         ARCHIVE = True
 
     if args.verbose:
-        init_logger()
+        utils.init_logger()
 
     if args.backup:
         backup()

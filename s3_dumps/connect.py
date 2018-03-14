@@ -1,4 +1,5 @@
-import boto
+import os
+import boto3
 
 
 class s3Connect:
@@ -17,14 +18,20 @@ class s3Connect:
         self.REGION = REGION
 
     def make_aws_conn(self):
-        return boto.connect_s3(aws_access_key_id=self.ACCESS_KEY,
-                               aws_secret_access_key=self.SECRET,
-                               host='https://s3.amazonaws.com')
+        AWS_BASE_URL = 'https://s3.amazonaws.com'
+        return boto3.resource('s3',
+                              region_name=self.REGION,
+                              endpoint_url=AWS_BASE_URL,
+                              aws_access_key_id=self.ACCESS_KEY,
+                              aws_secret_access_key=self.SECRET)
 
     def make_do_conn(self):
-        return boto.connect_s3(aws_access_key_id=self.ACCESS_KEY,
-                               aws_secret_access_key=self.SECRET,
-                               host='https://%s.%s' % (self.REGION, 'digitaloceanspaces.com'))
+        DO_BASE_URL = 'https://%s.%s' % (self.REGION, 'digitaloceanspaces.com')
+        return boto3.resource('s3',
+                              region_name=self.REGION,
+                              endpoint_url=DO_BASE_URL,
+                              aws_access_key_id=self.ACCESS_KEY,
+                              aws_secret_access_key=self.SECRET)
 
     def __getitem__(self, name):
         conn = None
@@ -38,13 +45,8 @@ class s3Connect:
             conn = self.do
         return conn
 
-
-    def upload_file_to_cloud(self, 
-            service,
-            bucket,
-            logger,
-            media_location,
-            file_key):
+    def upload_file_to_cloud(self, service, bucket, logger,
+                             media_location, file_key, DELETE_DUMP):
         """
         Uploads file to Cloud (Amazon or DigitalOcean) S3 services
         Arguments:
@@ -62,4 +64,5 @@ class s3Connect:
         logger.info('Uploaded file key {}.'.format(file_key))
         if DELETE_DUMP:
             os.remove(media_location)
-            logger.info('Removed the dump from local directory ({}).'.format(media_location))
+            logger.info('''Removed the dump from
+                        local directory ({}).'''.format(media_location))

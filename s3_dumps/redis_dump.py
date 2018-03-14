@@ -2,18 +2,18 @@
 
 from datetime import datetime
 from connect import s3Connect
-from utils import init_arguments, init_logger
 
 import os
-import boto3
 import argparse
 import subprocess
 
+import utils
+
 import logging
 import tarfile
-import tempfile
 
 logger = logging.getLogger('s3_backups')
+
 
 def create_redis_dump(filename):
     """
@@ -25,8 +25,10 @@ def create_redis_dump(filename):
         os.mkdir(DUMP_BASE_DIR)
 
     logger.info("Preparing " + filename + ".dump from the database dump ...")
-    ps = subprocess.Popen(REDIS_SAVE_CMD,
-        shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    ps = subprocess.Popen(
+            REDIS_SAVE_CMD, shell=True, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
     ps.wait()
 
     tar = tarfile.open(DUMP_BASE_DIR + filename + ".tar.gz", "w|gz")
@@ -42,7 +44,7 @@ def backup():
     filename = ARCHIVE_NAME + now.strftime('_%Y%m%d_%H%M%S')
 
     file_location = create_redis_dump(filename)
-    file_key = get_file_key(FILE_KEY)
+    file_key = utils.get_file_key(FILE_KEY, filename, ARCHIVE)
 
     conn.upload_file_to_cloud(
         media_location=file_location,
@@ -59,11 +61,13 @@ def backup():
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Creates redis DB dump and stores it to S3 using `redis-cli save`.')
-    parser = init_arguments(parser)
+    parser = argparse.ArgumentParser(
+                description='''Creates redis DB dump and stores
+                it to S3 using `redis-cli save`.''')
+    parser = utils.init_arguments(parser)
     parser.add_argument('--ARCHIVE_NAME',
-        default='all_redis_db',
-        help='The base name for the archive')
+                        default='all_redis_db',
+                        help='The base name for the archive')
 
     args = parser.parse_args()
 
@@ -79,6 +83,7 @@ if __name__ == '__main__':
 
     DUMP_RDB_PATH = args.DUMP_RDB_PATH
     REDIS_SAVE_CMD = args.REDIS_SAVE_CMD
+    ARCHIVE_NAME = args.ARCHIVE_NAME
 
     conn = s3Connect(ACCESS_KEY, SECRET, REGION)
 
@@ -86,7 +91,7 @@ if __name__ == '__main__':
         ARCHIVE = True
 
     if args.verbose:
-        init_logger()
+        utils.init_logger()
 
     if args.backup or args.archive:
         backup()
