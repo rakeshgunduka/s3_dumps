@@ -12,7 +12,7 @@ Rewritten code to work with boto3 and upload to Amazon s3 and DigitalOcean Space
 Installation
 ------------
 
-To install s3-backups::
+To install s3-dumps::
 
     $ sudo pip install s3_dumps
 
