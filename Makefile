@@ -9,7 +9,7 @@ clean:
 
 lint:
 	@echo "Checking code using pep8 and pyflakes ..."
-	@flake8
+	@flake8 s3_dumps
 
 
 backup_postgres:

@@ -1,9 +1,9 @@
 S3 Dumps
 ==========
 
-.. image:: https://travis-ci.org/rakeshgunduka/s3-backups.png?branch=master
+.. image:: https://travis-ci.org/rakeshgunduka/s3_dumps.png?branch=master
     :alt: Build Status
-    :target: http://travis-ci.org/rakeshgunduka/rakeshgunduka
+    :target: https://travis-ci.org/rakeshgunduka/s3_dumps
 
 
 This is fork of S3 Backups <https://github.com/epicserve/s3-backups>. 

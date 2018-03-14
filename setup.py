@@ -18,12 +18,17 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
     ],
-    entry_points = {
+    entry_points={
         'console_scripts': [
             'postgres_dump=s3_dumps.postgres_dump:main',
             'redis_dump=s3_dumps.redis_dump:main'
         ],
     },
-    scripts = ['s3_dumps/postgres_dump.py', 's3_dumps/redis_dump.py', 's3_dumps/connect.py', 's3_dumps/utils.py'],
+    scripts=[
+        's3_dumps/postgres_dump.py',
+        's3_dumps/redis_dump.py',
+        's3_dumps/connect.py',
+        's3_dumps/utils.py'
+    ],
     zip_safe=False
 )
