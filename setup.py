@@ -9,15 +9,15 @@ setup(
     author_email='rakesh.gunduka@gmail.com',
     url='https://github.com/rakeshgunduka/s3_dumps',
     include_package_data=True,
-    license=open('LICENSE.txt').read(),
+    license=open('LICENSE').read(),
     install_requires=[
         "boto3"
     ],
     classifiers=[
         'Development Status :: 1 - Planning',
-        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
         'Operating System :: OS Independent',
-        'Programming Language :: Python',
+        'Programming Language :: 3 :: Only'
     ],
     entry_points={
         'console_scripts': [
@@ -27,9 +27,7 @@ setup(
     },
     scripts=[
         's3_dumps/postgres_to_s3.py',
-        's3_dumps/redis_to_s3.py',
-        's3_dumps/connect.py',
-        's3_dumps/utils.py'
+        's3_dumps/redis_to_s3.py'
     ],
     keywords = ['s3', 'backup', 'postgres', 'redis', 'digitaloceanspaces', 'aws'],
     zip_safe=False
