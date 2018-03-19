@@ -37,12 +37,12 @@ class Archive(object):
                 if not re.match(r'[\d]{4}', year) and not re.match(r'[\d]{2}', month):
                     path, filename = os.path.split(obj.key)
                     new_key_name = '{path}/{year}/{month}/{day}/{filename}'.format(
-                            path=path,
-                            year=obj.last_modified.year,
-                            month=obj.last_modified.month,
-                            day=obj.last_modified.day,
-                            filename=filename
-                        )
+                        path=path,
+                        year=obj.last_modified.year,
+                        month=obj.last_modified.month,
+                        day=obj.last_modified.day,
+                        filename=filename
+                    )
 
                 if self.remove_key(obj):
                     obj.delete()

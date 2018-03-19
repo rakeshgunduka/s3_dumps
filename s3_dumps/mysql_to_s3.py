@@ -45,13 +45,12 @@ def create_db_dump(command, filename):
 def backup():
     """Creates the buckup and uploads"""
     now = datetime.now()
-    ARCHIVE_NAME = DB_NAME + '_db' if DB_NAME else ARCHIVE_NAME
-    filename = ARCHIVE_NAME + now.strftime('_%Y%m%d_%H%M%S')
-    mysqldump -u root -p --all-databases -h %s > filename
+    archive_name = DB_NAME + '_db' if DB_NAME else ARCHIVE_NAME
+    filename = archive_name + now.strftime('_%Y%m%d_%H%M%S')
 
     if DB_NAME:
         command = [
-            POSTGRES_DUMP_CMD,
+            MYSQL_DUMP_CMD,
             '-h', MYSQL_HOST,
             '-u', MYSQL_USER,
             '-p', MYSQL_PASSWORD,
@@ -60,7 +59,7 @@ def backup():
         ]
     else:
         command = [
-            POSTGRES_DUMP_CMD + 'all',
+            MYSQL_DUMP_CMD,
             '-h', MYSQL_HOST,
             '-u', MYSQL_USER,
             '-p', MYSQL_PASSWORD,
@@ -82,7 +81,7 @@ def backup():
         os.remove(file_location)
         logger.info('''Removed the dump from local directory ({}).'''.format(
             file_location))
-    
+
     logger.info('Sucessfully uploaded the Dump.')
 
 
@@ -106,7 +105,6 @@ if __name__ == '__main__':
                         default='root', help="Mysql user (default: root)")
     parser.add_argument('--MYSQL_PASSWORD',
                         default='', help="Mysql password (default: '')")
-    
 
     args = parser.parse_args()
 
@@ -133,9 +131,8 @@ if __name__ == '__main__':
         utils.init_logger(logger)
 
     if args.archive:
-        archive = Archive(
-                    conn=conn.get_conn(), service_name=SERVICE_NAME,
-                    bucket=BUCKET_NAME, file_key=FILE_KEY, db_name=DB_NAME)
+        archive = Archive(conn=conn.get_conn(), service_name=SERVICE_NAME,
+                          bucket=BUCKET_NAME, file_key=FILE_KEY, db_name=DB_NAME)
         archive.archive()
 
     if args.backup:

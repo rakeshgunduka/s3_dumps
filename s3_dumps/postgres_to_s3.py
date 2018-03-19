@@ -45,8 +45,8 @@ def create_db_dump(command, filename):
 def backup():
     """Creates the buckup and uploads"""
     now = datetime.now()
-    ARCHIVE_NAME = DB_NAME + '_db' if DB_NAME else ARCHIVE_NAME
-    filename = ARCHIVE_NAME + now.strftime('_%Y%m%d_%H%M%S')
+    archive_name = DB_NAME + '_db' if DB_NAME else ARCHIVE_NAME
+    filename = archive_name + now.strftime('_%Y%m%d_%H%M%S')
     if DB_NAME:
         command = [
             POSTGRES_DUMP_CMD,
@@ -73,7 +73,7 @@ def backup():
         os.remove(file_location)
         logger.info('''Removed the dump from local directory ({}).'''.format(
             file_location))
-    
+
     logger.info('Sucessfully uploaded the Dump.')
 
 
@@ -93,7 +93,6 @@ if __name__ == '__main__':
                         help='''Path to pg_dumpall (default: pg_dump).
                         You may change according to system
                         Eg. /usr/bin/pg_dump''')
-
 
     args = parser.parse_args()
 
@@ -116,9 +115,8 @@ if __name__ == '__main__':
         utils.init_logger(logger)
 
     if args.archive:
-        archive = Archive(
-                    conn=conn.get_conn(), service_name=SERVICE_NAME,
-                    bucket=BUCKET_NAME, file_key=FILE_KEY, db_name=DB_NAME)
+        archive = Archive(conn=conn.get_conn(), service_name=SERVICE_NAME,
+                          bucket=BUCKET_NAME, file_key=FILE_KEY, db_name=DB_NAME)
         archive.archive()
 
     if args.backup:

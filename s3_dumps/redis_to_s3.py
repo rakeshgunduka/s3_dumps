@@ -27,10 +27,8 @@ def create_redis_dump(filename):
 
     logger.info("Preparing " + filename + ".rdb from the database dump ...")
     logger.info(REDIS_SAVE_CMD)
-    ps = subprocess.Popen(
-            REDIS_SAVE_CMD, shell=True, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
+    ps = subprocess.Popen(REDIS_SAVE_CMD, shell=True, stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE)
     ps.wait()
 
     redis_dump_dir = REDIS_DUMP_DIR if REDIS_DUMP_DIR.endswith('/') else REDIS_DUMP_DIR + '/'
@@ -57,16 +55,14 @@ def backup():
         media_location=file_location,
         file_key=file_key
     )
-    
-    logger.info('Sucessfully uploaded the Dump.')
 
+    logger.info('Sucessfully uploaded the Dump.')
 
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(
-                description='''Creates redis DB dump and stores
-                it to S3 using `redis-cli save`.''')
+    parser = argparse.ArgumentParser(description='''Creates redis DB dump and stores
+                                     it to S3 using `redis-cli save`.''')
     parser = utils.init_arguments(parser)
     parser.add_argument('--ARCHIVE_NAME',
                         default='all_redis_db',
@@ -93,9 +89,8 @@ if __name__ == '__main__':
         utils.init_logger(logger)
 
     if args.archive:
-        archive = Archive(
-                    conn=conn.get_conn(), service_name=SERVICE_NAME,
-                    bucket=BUCKET_NAME, file_key=FILE_KEY)
+        archive = Archive(conn=conn.get_conn(), service_name=SERVICE_NAME,
+                          bucket=BUCKET_NAME, file_key=FILE_KEY)
         archive.archive()
 
     if args.backup:
