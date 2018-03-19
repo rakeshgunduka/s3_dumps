@@ -29,6 +29,7 @@ For Backup
 Using --backup flag, the script creates the dump and stores in the bucket as it is without year/month/date directory structure.
 
 ::
+
     --backup
 
 For Archive
@@ -36,6 +37,7 @@ For Archive
 Using --archive flag, the script takes all the files from the bucket and archives it in year/month/date directory structure.
 
 ::
+
     --archive
 
 For Archive and Backup
@@ -43,6 +45,7 @@ For Archive and Backup
 Using --backup --archive flags together, the script takes all the files from the bucket and archives it in year/month/date directory structure and creates a dump at the parent directory (inside Bucket).
 
 ::
+
     --backup --archive
     
 To dump into amazon s3 service.
@@ -50,6 +53,7 @@ To dump into amazon s3 service.
 Set --SERVICE_NAME to 'amazon'.
 
 ::
+
     --SERVICE_NAME='amazon'
 
 To dump into digitalocean spaces.
@@ -57,6 +61,7 @@ To dump into digitalocean spaces.
 Set --SERVICE_NAME to 'digitalocean'.
 
 ::
+
     --SERVICE_NAME='digitalocean'
 
 
