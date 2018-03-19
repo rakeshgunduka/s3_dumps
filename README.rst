@@ -212,5 +212,6 @@ To Do's
 Contributers
 ----------
 
-1.  Brent O\'Connor
-2.  Rakesh Gunduka
+1.  `Brent O\'Connor <https://github.com/epicserve>`_
+2.  `Rakesh Gunduka <https://github.com/rakeshgunduka>`_
+3.  `Shekhar Tiwatne <https://github.com/shon>`_
