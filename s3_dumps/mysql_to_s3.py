@@ -47,16 +47,25 @@ def backup():
     now = datetime.now()
     ARCHIVE_NAME = DB_NAME + '_db' if DB_NAME else ARCHIVE_NAME
     filename = ARCHIVE_NAME + now.strftime('_%Y%m%d_%H%M%S')
+    mysqldump -u root -p --all-databases -h %s > filename
+
     if DB_NAME:
         command = [
             POSTGRES_DUMP_CMD,
-            '-Fc', DB_NAME,
-            '-f', DUMP_BASE_DIR + filename + ".sql"
+            '-h', MYSQL_HOST,
+            '-u', MYSQL_USER,
+            '-p', MYSQL_PASSWORD,
+            '--databases', DB_NAME,
+            '>', DUMP_BASE_DIR + filename + ".sql"
         ]
     else:
         command = [
             POSTGRES_DUMP_CMD + 'all',
-            '-f', DUMP_BASE_DIR + filename + ".sql"
+            '-h', MYSQL_HOST,
+            '-u', MYSQL_USER,
+            '-p', MYSQL_PASSWORD,
+            '--all-databases',
+            '>', DUMP_BASE_DIR + filename + ".sql"
         ]
 
     file_location = create_db_dump(command, filename)
@@ -85,15 +94,19 @@ if __name__ == '__main__':
     parser = utils.init_arguments(parser)
 
     parser.add_argument('--ARCHIVE_NAME',
-                        default='all_postgres_db',
+                        default='all_mysql_db',
                         help='The base name for the archive')
-
-    parser.add_argument('--POSTGRES_DUMP_CMD',
-                        default='pg_dump',
-                        help='''Path to pg_dumpall (default: pg_dump).
-                        You may change according to system
-                        Eg. /usr/bin/pg_dump''')
-
+    parser.add_argument('--MYSQL_DUMP_CMD',
+                        default='mysqldump',
+                        help="mysqldump command (default: mysqldump)")
+    parser.add_argument('--MYSQL_HOST',
+                        default='localhost',
+                        help="Mysql host (default: localhost)")
+    parser.add_argument('--MYSQL_USER',
+                        default='root', help="Mysql user (default: root)")
+    parser.add_argument('--MYSQL_PASSWORD',
+                        default='', help="Mysql password (default: '')")
+    
 
     args = parser.parse_args()
 
@@ -109,7 +122,11 @@ if __name__ == '__main__':
     DUMP_BASE_DIR = args.DUMP_BASE_DIR
     ARCHIVE_NAME = args.ARCHIVE_NAME
 
-    POSTGRES_DUMP_CMD = args.POSTGRES_DUMP_CMD
+    MYSQL_DUMP_CMD = args.MYSQL_DUMP_CMD
+    MYSQL_HOST = args.MYSQL_HOST
+    MYSQL_USER = args.MYSQL_USER
+    MYSQL_PASSWORD = args.MYSQL_USER
+
     conn = s3Connect(access_key_id=ACCESS_KEY, secret_access_key=SECRET, region=REGION, service_name=SERVICE_NAME)
 
     if args.verbose:

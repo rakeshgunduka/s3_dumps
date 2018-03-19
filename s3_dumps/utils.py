@@ -47,12 +47,6 @@ def init_arguments(parser):
                         (Eg. my_db_name). If DB_NAME not provided then
                         it dumps all databases.''')
 
-    parser.add_argument('--POSTGRES_DUMP_CMD',
-                        default='pg_dump',
-                        help='''Path to pg_dumpall (default: pg_dump).
-                        You may change according to system
-                        Eg. /usr/bin/pg_dump''')
-
     parser.add_argument('--DUMP_BASE_DIR',
                         default='',
                         help='Path to dumps directory (default: "")')
@@ -62,7 +56,7 @@ def init_arguments(parser):
                         help='''Boolean value if True deletes the dump file
                         from dumps base directory''')
 
-    parser.add_argument('--DUMP_RDB_PATH',
+    parser.add_argument('--REDIS_DUMP_DIR',
                         default='/var/lib/redis/dump.rdb',
                         help='''The path to the Redis dump.rdb file
                             (default: /var/lib/redis/dump.rdb)''')
@@ -91,15 +85,16 @@ def init_arguments(parser):
 def init_logger(logger):
     logger.setLevel(logging.INFO)
     ch = logging.StreamHandler()
-    formatter = logging.Formatter('''
-        %(asctime)s - %(name)s - %(levelname)s - %(message)s''')
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     return logger
 
 
-def get_file_key(file_key, filename, ARCHIVE):
+def get_file_key(file_key, db_name=None, is_archive=False):
     file_key_suffix = file_key if not file_key.endswith('/') else file_key[:-1]
-    if ARCHIVE:
+    if db_name:
+        file_key_suffix += '/{db_name}'.format(db_name=db_name)
+    if is_archive:
         file_key_suffix += datetime.now().strftime('/%Y/%m/%d')
-    return r'%s/%s' % (file_key_suffix, filename + '.tar.gz')
+    return file_key_suffix

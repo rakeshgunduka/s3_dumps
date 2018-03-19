@@ -1,6 +1,13 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+from dateutil import tz
 
+import s3_dumps.utils as utils
+
+import os
 import re
+import logging
+
+logger = logging.getLogger('s3_dumps')
 
 
 class Archive(object):
@@ -12,55 +19,65 @@ class Archive(object):
     - Keep 1st day of the month forever
     """
 
-    def __init__(self, conn, SERVICE_NAME, BUCKET_NAME, FILE_KEY):
+    def __init__(self, conn, service_name, bucket, file_key, db_name=None):
         self.conn = conn
-        self.SERVICE_NAME = SERVICE_NAME
-        self.BUCKET_NAME = BUCKET_NAME
-        self.FILE_KEY = FILE_KEY
+        self.service_name = service_name
+        self.bucket = bucket
+        self.file_key_suffix = utils.get_file_key(file_key=file_key, db_name=db_name)
 
-    def schedule(self, conn, schedule_module='schedule'):
-        schedule = __import__(schedule_module)
-        bucket = self.conn[self.SERVICE_NAME].get_bucket(self.BUCKET_NAME)
-
-        file_key = self.FILE_KEY if self.FILE_KEY.endswith('/') else self.FILE_KEY + '/'
-
-        for obj in bucket.objects.filter(Prefix=file_key):
+    def archive(self):
+        buck = self.conn.Bucket(self.bucket)
+        for obj in buck.objects.filter(Prefix=self.file_key_suffix):
             if not obj.key.endswith("/"):
-
-                obj = self.add_datetimes_to_key(obj)
-
-                # create a new key that puts the archive in a year/mon`th sub
-                # directory if it's not in a year/month sub directory already
                 name_parts = obj.key.split('/')
                 month = name_parts[-2]
                 year = name_parts[-3]
                 new_key_name = obj.key
+
                 if not re.match(r'[\d]{4}', year) and not re.match(r'[\d]{2}', month):
-                    name_parts.insert(len(name_parts) - 1, "%d" % obj.local_last_modified.year)
-                    name_parts.insert(len(name_parts) - 1, "%02d" % obj.local_last_modified.month)
-                    new_key_name = "/".join(name_parts)
+                    path, filename = os.path.split(obj.key)
+                    new_key_name = '{path}/{year}/{month}/{day}/{filename}'.format(
+                            path=path,
+                            year=obj.last_modified.year,
+                            month=obj.last_modified.month,
+                            day=obj.last_modified.day,
+                            filename=filename
+                        )
 
-                # either keep the file or delete it
-                keep_file = schedule.keep_file(obj)
-                if keep_file and obj.key != new_key_name:
-                    self.conn.Object(self.BUCKET_NAME, new_key_name, metadata=key.meta, preserve_acl=True).copy_from(CopySource=obj.key)
-                    bucket.delete_key(obj.key)
-                elif not keep_file:
-                    bucket.delete_key(obj.key)
+                if self.remove_key(obj):
+                    obj.delete()
+                elif obj.key != new_key_name:
+                    logger.info('Archiving object to {new_key}'.format(
+                        key=obj.key,
+                        new_key=new_key_name,
+                    ))
+                    copy_source = {'Bucket': obj.bucket_name, 'Key': obj.key}
+                    new_obj = self.conn.Object(self.bucket, new_key_name)
+                    new_obj.copy_from(CopySource=copy_source)
+                    obj.delete()
 
-    def add_datetimes_to_key(self, obj):
-        """
-        Convert the last_modified GMT datetime string to a datetime object and
-        create utc and local datetime objects.
-        """
+    def remove_key(self, obj):
+        delta = datetime.now().astimezone(tz=tz.tzutc()) - obj.last_modified
+        week_delta = timedelta(days=7)
+        month_delta = timedelta(days=30)
 
-        utc = tz.tzutc()
-        gmt = tz.gettz('GMT')
-        local_tz = tz.tzlocal()
-
-        obj.last_modified = datetime.strptime(obj.last_modified, "%Y-%m-%dT%H:%M:%S.%fZ")
-        obj.last_modified = obj.last_modified.replace(tzinfo=gmt)
-        obj.utc_last_modified = obj.last_modified.astimezone(utc)
-        obj.local_last_modified = obj.last_modified.astimezone(local_tz)
-
-        return obj
+        if delta <= week_delta:
+            logger.info('%s - Keeping object \"%s\" because it\'s less than a week old.' % (delta, obj.key))
+            return False
+        elif week_delta < delta < month_delta:
+            if obj.last_modified.hour != 0:
+                logger.info('%s - Removing object \"%s\" because it\'s not a midnight backup and it\'s older than one week but less than a month' % (delta, obj.key))
+                return True
+            elif obj.last_modified.day % 2 != 0:
+                logger.info('%s - Removing object \"%s\" because it\'s older than one week but less than a month and not an even day.' % (delta, obj.key))
+                return True
+            else:
+                logger.info('%s - Keeping object \"%s\" because it\'s older than one week but less than a month and it\'s an even day.' % (delta, obj.key))
+                return False
+        elif delta > month_delta:
+            if obj.month_delta.day == 1:
+                logger.info('%s - Keeping object \"%s\" because it\'s older than a month and also the first day of the month.' % (delta, obj.key))
+                return False
+            else:
+                logger.info('%s - Removing object \"%s\" because it\'s older than a month and not the first day of the month.' % (delta, obj.key))
+                return True
