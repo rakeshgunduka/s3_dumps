@@ -17,7 +17,7 @@ setup(
         'Development Status :: 1 - Planning',
         'Intended Audience :: System Administrators',
         'Operating System :: OS Independent',
-        'Programming Language :: 3 :: Only'
+        'Programming Language :: Python :: 3 :: Only'
     ],
     entry_points={
         'console_scripts': [
