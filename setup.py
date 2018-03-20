@@ -9,7 +9,6 @@ setup(
     author_email='rakesh.gunduka@gmail.com',
     url='https://github.com/rakeshgunduka/s3_dumps',
     include_package_data=True,
-    license=open('LICENSE').read(),
     install_requires=[
         "boto3"
     ],
