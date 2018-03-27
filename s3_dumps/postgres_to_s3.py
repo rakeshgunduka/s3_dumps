@@ -15,6 +15,7 @@ import tarfile
 import tempfile
 
 logger = logging.getLogger('s3_dumps')
+logger.setLevel(logging.DEBUG)
 
 
 def create_db_dump(command, filename):
@@ -26,7 +27,8 @@ def create_db_dump(command, filename):
     if DUMP_BASE_DIR and not os.path.exists(DUMP_BASE_DIR):
         os.mkdir(DUMP_BASE_DIR)
 
-    logger.info("Preparing " + filename + ".sql from the database dump ...")
+    logger.info('Preparing ' + filename + '.sql from the database dump ...')
+    logger.info('Executing: %s', command)
     with tempfile.NamedTemporaryFile() as temp1:
         ps = subprocess.Popen(
             command,
@@ -35,15 +37,17 @@ def create_db_dump(command, filename):
         ps.wait()
         temp1.flush()
 
-        tar = tarfile.open(DUMP_BASE_DIR + filename + ".tar.gz", "w|gz")
-        tar.add(temp1.name, filename + ".sql")
+        tar = tarfile.open(DUMP_BASE_DIR + filename + '.tar.gz', 'w|gz')
+        tar.add(temp1.name, filename + '.sql')
         tar.close()
-    logger.info("Created tar file " + filename + ".tar.gz")
+    logger.info('Created tar file ' + filename + '.tar.gz')
     return '{}{}.tar.gz'.format(DUMP_BASE_DIR, filename)
 
 
 def backup():
-    """Creates the buckup and uploads"""
+    """
+    Creates the buckup and uploads
+    """
     now = datetime.now()
     archive_name = DB_NAME + '_db' if DB_NAME else ARCHIVE_NAME
     filename = archive_name + now.strftime('_%Y%m%d_%H%M%S')
@@ -51,12 +55,12 @@ def backup():
         command = [
             POSTGRES_DUMP_CMD,
             '-Fc', DB_NAME,
-            '-f', DUMP_BASE_DIR + filename + ".sql"
+            '-f', DUMP_BASE_DIR + filename + '.sql'
         ]
     else:
         command = [
             POSTGRES_DUMP_CMD + 'all',
-            '-f', DUMP_BASE_DIR + filename + ".sql"
+            '-f', DUMP_BASE_DIR + filename + '.sql'
         ]
 
     file_location = create_db_dump(command, filename)
