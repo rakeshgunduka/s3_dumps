@@ -1,21 +1,19 @@
-import os
 from setuptools import setup
 
-abs_path = os.path.abspath(os.path.dirname(__file__))
-
-f = open(os.path.join(abs_path, 'README.rst'), encoding='utf-8')
-long_description = f.read()
-f.close()
+def readme():
+    with open('README.rst') as f:
+        return f.read()
 
 setup(
     name='s3_dumps',
     packages=['s3_dumps'],
     version=__import__('s3_dumps').__version__,
     description='A package for backup DB and store in s3',
-    long_description=long_description,
+    long_description='For more information visit: http://s3-dumps.readthedocs.io/en/latest/',
     author='Reck31',
     author_email='rakesh.gunduka@gmail.com',
     url='https://github.com/rakeshgunduka/s3_dumps',
+    license='MIT',
     include_package_data=True,
     install_requires=[
         "boto3"

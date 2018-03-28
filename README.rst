@@ -1,11 +1,11 @@
 S3 Dumps
-==========
+========
 
 |Build Status|
 
-Note: A rewritten fork of `s3-backups` <https://github.com/epicserve/s3-backups>.
+Note: A rewritten fork of `s3-backups <https://github.com/epicserve/s3-backups>`_.
 
-`S3 Dumps <https://github.com/epicserve/s3-backups>`_ provides easy scripts that system administrators can use to backup
+`S3dumps <https://github.com/rakeshgunduka/s3_dumps>`_ provides easy scripts that system administrators can use to backup
 data from programs likes PostgreSQL, Redis, etc.
 
 .. |Build Status| raw:: html
@@ -73,23 +73,26 @@ PostgreSQL
 
 Add the following to the file ``/etc/cron.d/postgres_to_s3`` and then change the command arguments so the command is using your correct AWS credentials, backup bucket and the correct base S3 Key/base folder.
 
-
 Amazon Services
+
 ::
 
     0 */1 * * * postgres postgres_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
 
 Digitalocen Spaces
+
 ::
 
     0 */1 * * * postgres postgres_to_s3.py --SERVICE_NAME='digitalocean' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
 
 To create dump of a specific database (my-db-name).
+
 ::
 
     0 */1 * * * postgres postgres_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --DB_NAME='my-db-name' --FILE_KEY='postgres/my-awesome-server' --backup
 
 To backup and archive at the same time.
+
 ::
 
      0 */1 * * * postgres postgres_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup --archive
@@ -101,21 +104,25 @@ Redis
 Add the following to the file ``/etc/cron.d/redis_to_s3`` and then change the command arguments so the command is using your correct AWS credentials, backup bucket and the correct base S3 Key/base folder.
 
 Amazon Services
+
 ::
 
     0 */1 * * * postgres redis_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
 
 Digitalocen Spaces
+
 ::
 
     0 */1 * * * postgres redis_to_s3.py --SERVICE_NAME='digitalocean' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
 
 Provide Redis working according to the system redis config directory. (Not mandatory field) If not provided it sets to default.
+
 ::
 
     0 */1 * * * root redis_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='redis/my-awesome-server' --REDIS_DUMP_DIR='/Your/Redis/Config/Dir' --backup
 
 To backup and archive at the same time.
+
 ::
 
      0 */1 * * * root redis_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='redis/my-awesome-server' --REDIS_DUMP_DIR='/Your/Redis/Config/Dir' --REDIS_SAVE_CMD='redis-cli save' --backup --archive
@@ -210,7 +217,7 @@ To Do's
 1.  Add tests
 
 Contributers
-----------
+------------
 
 1.  `Brent O\'Connor <https://github.com/epicserve>`_
 2.  `Rakesh Gunduka <https://github.com/rakeshgunduka>`_

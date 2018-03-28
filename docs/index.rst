@@ -1,11 +1,11 @@
-S3 Dumps
-==========
+S3 Dumps - 2.0
+==============
 
 |Build Status|
 
-Note: A rewritten fork of `s3-backups` <https://github.com/epicserve/s3-backups>.
+Note: A rewritten fork of `s3-backups <https://github.com/epicserve/s3-backups>`_.
 
-`S3 Dumps <https://github.com/epicserve/s3-backups>`_ provides easy scripts that system administrators can use to backup
+`S3 Dumps <https://github.com/rakeshgunduka/s3_dumps>`_ provides easy scripts that system administrators can use to backup
 data from programs likes PostgreSQL, Redis, etc.
 
 .. |Build Status| raw:: html
