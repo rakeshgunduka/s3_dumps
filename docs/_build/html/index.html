@@ -1,37 +1,27 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>S3 Dumps &mdash; S3 Dumps  documentation</title>
-    
+    <title>S3 Dumps &#8212; S3 Dumps  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="S3 Dumps  documentation" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
@@ -50,7 +40,7 @@ data from programs likes PostgreSQL, Redis, etc.</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>To install s3-backups:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$ sudo pip install s3_dumps
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip install s3_dumps
 </pre></div>
 </div>
 </div>
@@ -58,100 +48,95 @@ data from programs likes PostgreSQL, Redis, etc.</p>
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="for-backup">
 <h3>For Backup<a class="headerlink" href="#for-backup" title="Permalink to this headline">¶</a></h3>
-<p>Using &#8211;backup flag, the script creates the dump and stores in the bucket as it is without year/month/date directory structure.</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd>&#8211;backup</dd>
-</dl>
+<p>Using –backup flag, the script creates the dump and stores in the bucket as it is without year/month/date directory structure.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">backup</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="for-archive">
 <h3>For Archive<a class="headerlink" href="#for-archive" title="Permalink to this headline">¶</a></h3>
-<p>Using &#8211;archive flag, the script takes all the files from the bucket and archives it in year/month/date directory structure.</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd>&#8211;archive</dd>
-</dl>
+<p>Using –archive flag, the script takes all the files from the bucket and archives it in year/month/date directory structure.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">archive</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="for-archive-and-backup">
 <h3>For Archive and Backup<a class="headerlink" href="#for-archive-and-backup" title="Permalink to this headline">¶</a></h3>
-<p>Using &#8211;backup &#8211;archive flags together, the script takes all the files from the bucket and archives it in year/month/date directory structure and creates a dump at the parent directory (inside Bucket).</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd>&#8211;backup &#8211;archive</dd>
-</dl>
+<p>Using –backup –archive flags together, the script takes all the files from the bucket and archives it in year/month/date directory structure and creates a dump at the parent directory (inside Bucket).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">backup</span> <span class="o">--</span><span class="n">archive</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="to-dump-into-amazon-s3-service">
 <h3>To dump into amazon s3 service.<a class="headerlink" href="#to-dump-into-amazon-s3-service" title="Permalink to this headline">¶</a></h3>
-<p>Set &#8211;SERVICE_NAME to &#8216;amazon&#8217;.</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd>&#8211;SERVICE_NAME=&#8217;amazon&#8217;</dd>
-</dl>
+<p>Set –SERVICE_NAME to ‘amazon’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;amazon&#39;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="to-dump-into-digitalocean-spaces">
 <h3>To dump into digitalocean spaces.<a class="headerlink" href="#to-dump-into-digitalocean-spaces" title="Permalink to this headline">¶</a></h3>
-<p>Set &#8211;SERVICE_NAME to &#8216;digitalocean&#8217;.</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd>&#8211;SERVICE_NAME=&#8217;digitalocean&#8217;</dd>
-</dl>
+<p>Set –SERVICE_NAME to ‘digitalocean’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;digitalocean&#39;</span>
+</pre></div>
+</div>
 <div class="section" id="setting-up-s3-dumps-to-run-automatically-using-cron">
 <h4>Setting Up S3 Dumps to Run Automatically Using Cron<a class="headerlink" href="#setting-up-s3-dumps-to-run-automatically-using-cron" title="Permalink to this headline">¶</a></h4>
 </div>
 </div>
 <div class="section" id="postgresql">
 <h3>PostgreSQL<a class="headerlink" href="#postgresql" title="Permalink to this headline">¶</a></h3>
-<p>Add the following to the file <code class="docutils literal"><span class="pre">/etc/cron.d/postgres_to_s3</span></code> and then change the command arguments so the command is using your correct AWS credentials, backup bucket and the correct base S3 Key/base folder.</p>
+<p>Add the following to the file <code class="docutils literal notranslate"><span class="pre">/etc/cron.d/postgres_to_s3</span></code> and then change the command arguments so the command is using your correct AWS credentials, backup bucket and the correct base S3 Key/base folder.</p>
 <p>Amazon Services</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>0 */1 * * * postgres postgres_to_s3.py --SERVER_NAME=&#39;amazon&#39; --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --REGION=&#39;bucket-region&#39; --BUCKET_NAME=&#39;my-backup-bucket&#39; --FILE_KEY=&#39;postgres/my-awesome-server&#39; --backup
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">*/</span><span class="mi">1</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">postgres</span> <span class="n">postgres_to_s3</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;amazon&#39;</span> <span class="o">--</span><span class="n">ACCESS_KEY</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">SECRET</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">REGION</span><span class="o">=</span><span class="s1">&#39;bucket-region&#39;</span> <span class="o">--</span><span class="n">BUCKET_NAME</span><span class="o">=</span><span class="s1">&#39;my-backup-bucket&#39;</span> <span class="o">--</span><span class="n">FILE_KEY</span><span class="o">=</span><span class="s1">&#39;postgres/my-awesome-server&#39;</span> <span class="o">--</span><span class="n">backup</span>
 </pre></div>
 </div>
 <p>Digitalocen Spaces</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>0 */1 * * * postgres postgres_to_s3.py --SERVER_NAME=&#39;digitalocean&#39; --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --REGION=&#39;bucket-region&#39; --BUCKET_NAME=&#39;my-backup-bucket&#39; --FILE_KEY=&#39;postgres/my-awesome-server&#39; --backup
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">*/</span><span class="mi">1</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">postgres</span> <span class="n">postgres_to_s3</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;digitalocean&#39;</span> <span class="o">--</span><span class="n">ACCESS_KEY</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">SECRET</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">REGION</span><span class="o">=</span><span class="s1">&#39;bucket-region&#39;</span> <span class="o">--</span><span class="n">BUCKET_NAME</span><span class="o">=</span><span class="s1">&#39;my-backup-bucket&#39;</span> <span class="o">--</span><span class="n">FILE_KEY</span><span class="o">=</span><span class="s1">&#39;postgres/my-awesome-server&#39;</span> <span class="o">--</span><span class="n">backup</span>
 </pre></div>
 </div>
 <p>To create dump of a specific database (my-db-name).</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>0 */1 * * * postgres postgres_to_s3.py --SERVER_NAME=&#39;amazon&#39; --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --REGION=&#39;bucket-region&#39; --BUCKET_NAME=&#39;my-backup-bucket&#39; --DB_NAME=&#39;my-db-name&#39; --FILE_KEY=&#39;postgres/my-awesome-server&#39; --backup
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">*/</span><span class="mi">1</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">postgres</span> <span class="n">postgres_to_s3</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;amazon&#39;</span> <span class="o">--</span><span class="n">ACCESS_KEY</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">SECRET</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">REGION</span><span class="o">=</span><span class="s1">&#39;bucket-region&#39;</span> <span class="o">--</span><span class="n">BUCKET_NAME</span><span class="o">=</span><span class="s1">&#39;my-backup-bucket&#39;</span> <span class="o">--</span><span class="n">DB_NAME</span><span class="o">=</span><span class="s1">&#39;my-db-name&#39;</span> <span class="o">--</span><span class="n">FILE_KEY</span><span class="o">=</span><span class="s1">&#39;postgres/my-awesome-server&#39;</span> <span class="o">--</span><span class="n">backup</span>
 </pre></div>
 </div>
 <p>To backup and archive at the same time.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>0 */1 * * * postgres postgres_to_s3.py --SERVER_NAME=&#39;amazon&#39; --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --REGION=&#39;bucket-region&#39; --BUCKET_NAME=&#39;my-backup-bucket&#39; --FILE_KEY=&#39;postgres/my-awesome-server&#39; --backup --archive
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">*/</span><span class="mi">1</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">postgres</span> <span class="n">postgres_to_s3</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;amazon&#39;</span> <span class="o">--</span><span class="n">ACCESS_KEY</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">SECRET</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">REGION</span><span class="o">=</span><span class="s1">&#39;bucket-region&#39;</span> <span class="o">--</span><span class="n">BUCKET_NAME</span><span class="o">=</span><span class="s1">&#39;my-backup-bucket&#39;</span> <span class="o">--</span><span class="n">FILE_KEY</span><span class="o">=</span><span class="s1">&#39;postgres/my-awesome-server&#39;</span> <span class="o">--</span><span class="n">backup</span> <span class="o">--</span><span class="n">archive</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="redis">
 <h3>Redis<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h3>
-<p>Add the following to the file <code class="docutils literal"><span class="pre">/etc/cron.d/redis_to_s3</span></code> and then change the command arguments so the command is using your correct AWS credentials, backup bucket and the correct base S3 Key/base folder.</p>
+<p>Add the following to the file <code class="docutils literal notranslate"><span class="pre">/etc/cron.d/redis_to_s3</span></code> and then change the command arguments so the command is using your correct AWS credentials, backup bucket and the correct base S3 Key/base folder.</p>
 <p>Amazon Services</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>0 */1 * * * postgres redis_to_s3.py --SERVER_NAME=&#39;amazon&#39; --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --REGION=&#39;bucket-region&#39; --BUCKET_NAME=&#39;my-backup-bucket&#39; --FILE_KEY=&#39;postgres/my-awesome-server&#39; --backup
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">*/</span><span class="mi">1</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">postgres</span> <span class="n">redis_to_s3</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;amazon&#39;</span> <span class="o">--</span><span class="n">ACCESS_KEY</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">SECRET</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">REGION</span><span class="o">=</span><span class="s1">&#39;bucket-region&#39;</span> <span class="o">--</span><span class="n">BUCKET_NAME</span><span class="o">=</span><span class="s1">&#39;my-backup-bucket&#39;</span> <span class="o">--</span><span class="n">FILE_KEY</span><span class="o">=</span><span class="s1">&#39;postgres/my-awesome-server&#39;</span> <span class="o">--</span><span class="n">backup</span>
 </pre></div>
 </div>
 <p>Digitalocen Spaces</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>0 */1 * * * postgres redis_to_s3.py --SERVER_NAME=&#39;digitalocean&#39; --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --REGION=&#39;bucket-region&#39; --BUCKET_NAME=&#39;my-backup-bucket&#39; --FILE_KEY=&#39;postgres/my-awesome-server&#39; --backup
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">*/</span><span class="mi">1</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">postgres</span> <span class="n">redis_to_s3</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;digitalocean&#39;</span> <span class="o">--</span><span class="n">ACCESS_KEY</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">SECRET</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">REGION</span><span class="o">=</span><span class="s1">&#39;bucket-region&#39;</span> <span class="o">--</span><span class="n">BUCKET_NAME</span><span class="o">=</span><span class="s1">&#39;my-backup-bucket&#39;</span> <span class="o">--</span><span class="n">FILE_KEY</span><span class="o">=</span><span class="s1">&#39;postgres/my-awesome-server&#39;</span> <span class="o">--</span><span class="n">backup</span>
 </pre></div>
 </div>
 <p>Provide Redis working according to the system redis config directory. (Not mandatory field) If not provided it sets to default.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>0 */1 * * * root redis_to_s3.py --SERVER_NAME=&#39;amazon&#39; --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --REGION=&#39;bucket-region&#39; --BUCKET_NAME=&#39;my-backup-bucket&#39; --FILE_KEY=&#39;redis/my-awesome-server&#39; --REDIS_DUMP_DIR=&#39;/Your/Redis/Config/Dir&#39; --backup
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">*/</span><span class="mi">1</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">root</span> <span class="n">redis_to_s3</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;amazon&#39;</span> <span class="o">--</span><span class="n">ACCESS_KEY</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">SECRET</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">REGION</span><span class="o">=</span><span class="s1">&#39;bucket-region&#39;</span> <span class="o">--</span><span class="n">BUCKET_NAME</span><span class="o">=</span><span class="s1">&#39;my-backup-bucket&#39;</span> <span class="o">--</span><span class="n">FILE_KEY</span><span class="o">=</span><span class="s1">&#39;redis/my-awesome-server&#39;</span> <span class="o">--</span><span class="n">REDIS_DUMP_DIR</span><span class="o">=</span><span class="s1">&#39;/Your/Redis/Config/Dir&#39;</span> <span class="o">--</span><span class="n">backup</span>
 </pre></div>
 </div>
 <p>To backup and archive at the same time.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>0 */1 * * * root redis_to_s3.py --SERVER_NAME=&#39;amazon&#39; --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; --REGION=&#39;bucket-region&#39; --BUCKET_NAME=&#39;my-backup-bucket&#39; --FILE_KEY=&#39;redis/my-awesome-server&#39; --REDIS_DUMP_DIR=&#39;/Your/Redis/Config/Dir&#39; --REDIS_SAVE_CMD=&#39;redis-cli save&#39; --backup --archive
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">*/</span><span class="mi">1</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">root</span> <span class="n">redis_to_s3</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">SERVICE_NAME</span><span class="o">=</span><span class="s1">&#39;amazon&#39;</span> <span class="o">--</span><span class="n">ACCESS_KEY</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">SECRET</span><span class="o">=</span><span class="s1">&#39;xxxxxxxxxxxxxxxxxxxx&#39;</span> <span class="o">--</span><span class="n">REGION</span><span class="o">=</span><span class="s1">&#39;bucket-region&#39;</span> <span class="o">--</span><span class="n">BUCKET_NAME</span><span class="o">=</span><span class="s1">&#39;my-backup-bucket&#39;</span> <span class="o">--</span><span class="n">FILE_KEY</span><span class="o">=</span><span class="s1">&#39;redis/my-awesome-server&#39;</span> <span class="o">--</span><span class="n">REDIS_DUMP_DIR</span><span class="o">=</span><span class="s1">&#39;/Your/Redis/Config/Dir&#39;</span> <span class="o">--</span><span class="n">REDIS_SAVE_CMD</span><span class="o">=</span><span class="s1">&#39;redis-cli save&#39;</span> <span class="o">--</span><span class="n">backup</span> <span class="o">--</span><span class="n">archive</span>
 </pre></div>
 </div>
 <div class="section" id="manually-running-dumps-and-archiving">
 <h4>Manually Running Dumps and Archiving<a class="headerlink" href="#manually-running-dumps-and-archiving" title="Permalink to this headline">¶</a></h4>
 <p>When running the archive command, S3 Dumps moves backups into a
-<code class="docutils literal"><span class="pre">year/month/date</span></code> sub folder (technically a S3 key).</p>
-<p>The default archive mode will ...</p>
+<code class="docutils literal notranslate"><span class="pre">year/month/date</span></code> sub folder (technically a S3 key).</p>
+<p>The default archive mode will …</p>
 <ul class="simple">
 <li>keep all archives for 7 days</li>
 <li>keep midnight backups for every other day for 30 days</li>
 <li>keep the first day of the month forever</li>
-<li>remove all other files that aren&#8217;t scheduled to be kept</li>
+<li>remove all other files that aren’t scheduled to be kept</li>
 </ul>
 <p>To backup PostgreSQL, run the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$ postgres_to_s3.py \
---SERVER_NAME=&#39;amazon&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ postgres_to_s3.py \
+--SERVICE_NAME=&#39;amazon&#39;
 --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --REGION=&#39;bucket-region&#39; \
@@ -161,8 +146,8 @@ data from programs likes PostgreSQL, Redis, etc.</p>
 </pre></div>
 </div>
 <p>To archive PostgreSQL backups, run the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$ postgres_to_s3.py \
---SERVER_NAME=&#39;amazon&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ postgres_to_s3.py \
+--SERVICE_NAME=&#39;amazon&#39;
 --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --REGION=&#39;bucket-region&#39; \
@@ -172,8 +157,8 @@ data from programs likes PostgreSQL, Redis, etc.</p>
 </pre></div>
 </div>
 <p>To backup Redis, run the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$ redis_to_s3.py \
---SERVER_NAME=&#39;amazon&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ redis_to_s3.py \
+--SERVICE_NAME=&#39;amazon&#39;
 --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --REGION=&#39;bucket-region&#39; \
@@ -185,8 +170,8 @@ data from programs likes PostgreSQL, Redis, etc.</p>
 </pre></div>
 </div>
 <p>To archive Redis, run the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$ redis_to_s3.py \
---SERVER_NAME=&#39;amazon&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ redis_to_s3.py \
+--SERVICE_NAME=&#39;amazon&#39;
 --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --REGION=&#39;bucket-region&#39; \
@@ -198,8 +183,8 @@ data from programs likes PostgreSQL, Redis, etc.</p>
 </pre></div>
 </div>
 <p>To backup MySQL, run the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$ mysql_to_s3.py \
---SERVER_NAME=&#39;amazon&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mysql_to_s3.py \
+--SERVICE_NAME=&#39;amazon&#39;
 --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --REGION=&#39;bucket-region&#39; \
@@ -209,8 +194,8 @@ data from programs likes PostgreSQL, Redis, etc.</p>
 </pre></div>
 </div>
 <p>To archive MySQL, run the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$ mysql_to_s3.py \
---SERVER_NAME=&#39;amazon&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mysql_to_s3.py \
+--SERVICE_NAME=&#39;amazon&#39;
 --ACCESS_KEY=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --SECRET=&#39;xxxxxxxxxxxxxxxxxxxx&#39; \
 --REGION=&#39;bucket-region&#39; \
@@ -222,10 +207,18 @@ data from programs likes PostgreSQL, Redis, etc.</p>
 </div>
 </div>
 </div>
+<div class="section" id="contributers">
+<h2>Contributers<a class="headerlink" href="#contributers" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://github.com/epicserve">Brent O’Connor</a></li>
+<li><a class="reference external" href="https://github.com/rakeshgunduka">Rakesh Gunduka</a></li>
+<li><a class="reference external" href="https://github.com/shon">Shekhar Tiwatne</a></li>
+</ol>
+</div>
 <div class="section" id="contribute">
 <h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>Look for an open <a class="reference external" href="https://github.com/rakeshgunduka/s3_dumps/issues">issue</a> or create new issue to get a dialog going about the new feature or bug that you&#8217;ve discovered.</li>
+<li>Look for an open <a class="reference external" href="https://github.com/rakeshgunduka/s3_dumps/issues">issue</a> or create new issue to get a dialog going about the new feature or bug that you’ve discovered.</li>
 <li>Fork the <a class="reference external" href="https://github.com/rakeshgunduka/s3_dumps">repository</a> on Github to start making your changes to the master branch (or branch off of it).</li>
 <li>Write a test which shows that the bug was fixed or that the feature works as expected.</li>
 <li>Make a pull request.</li>
@@ -259,6 +252,7 @@ data from programs likes PostgreSQL, Redis, etc.</p>
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#contributers">Contributers</a></li>
 <li><a class="reference internal" href="#contribute">Contribute</a></li>
 </ul>
 </li>
@@ -273,21 +267,20 @@ data from programs likes PostgreSQL, Redis, etc.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/index.txt"
+      <li><a href="_sources/index.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -298,11 +291,11 @@ data from programs likes PostgreSQL, Redis, etc.</p>
       &copy;2013, Brent O'Connor, Rakesh Gunduka.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/index.txt"
+      <a href="_sources/index.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

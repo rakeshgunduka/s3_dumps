@@ -77,22 +77,22 @@ Add the following to the file ``/etc/cron.d/postgres_to_s3`` and then change the
 Amazon Services
 ::
 
-    0 */1 * * * postgres postgres_to_s3.py --SERVER_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
+    0 */1 * * * postgres postgres_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
 
 Digitalocen Spaces
 ::
 
-    0 */1 * * * postgres postgres_to_s3.py --SERVER_NAME='digitalocean' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
+    0 */1 * * * postgres postgres_to_s3.py --SERVICE_NAME='digitalocean' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
 
 To create dump of a specific database (my-db-name).
 ::
 
-    0 */1 * * * postgres postgres_to_s3.py --SERVER_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --DB_NAME='my-db-name' --FILE_KEY='postgres/my-awesome-server' --backup
+    0 */1 * * * postgres postgres_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --DB_NAME='my-db-name' --FILE_KEY='postgres/my-awesome-server' --backup
 
 To backup and archive at the same time.
 ::
 
-     0 */1 * * * postgres postgres_to_s3.py --SERVER_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup --archive
+     0 */1 * * * postgres postgres_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup --archive
 
 
 Redis
@@ -103,22 +103,22 @@ Add the following to the file ``/etc/cron.d/redis_to_s3`` and then change the co
 Amazon Services
 ::
 
-    0 */1 * * * postgres redis_to_s3.py --SERVER_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
+    0 */1 * * * postgres redis_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
 
 Digitalocen Spaces
 ::
 
-    0 */1 * * * postgres redis_to_s3.py --SERVER_NAME='digitalocean' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
+    0 */1 * * * postgres redis_to_s3.py --SERVICE_NAME='digitalocean' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='postgres/my-awesome-server' --backup
 
 Provide Redis working according to the system redis config directory. (Not mandatory field) If not provided it sets to default.
 ::
 
-    0 */1 * * * root redis_to_s3.py --SERVER_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='redis/my-awesome-server' --REDIS_DUMP_DIR='/Your/Redis/Config/Dir' --backup
+    0 */1 * * * root redis_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='redis/my-awesome-server' --REDIS_DUMP_DIR='/Your/Redis/Config/Dir' --backup
 
 To backup and archive at the same time.
 ::
 
-     0 */1 * * * root redis_to_s3.py --SERVER_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='redis/my-awesome-server' --REDIS_DUMP_DIR='/Your/Redis/Config/Dir' --REDIS_SAVE_CMD='redis-cli save' --backup --archive
+     0 */1 * * * root redis_to_s3.py --SERVICE_NAME='amazon' --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' --SECRET='xxxxxxxxxxxxxxxxxxxx' --REGION='bucket-region' --BUCKET_NAME='my-backup-bucket' --FILE_KEY='redis/my-awesome-server' --REDIS_DUMP_DIR='/Your/Redis/Config/Dir' --REDIS_SAVE_CMD='redis-cli save' --backup --archive
 
 Manually Running Dumps and Archiving
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -136,7 +136,7 @@ The default archive mode will ...
 To backup PostgreSQL, run the following::
 
     $ postgres_to_s3.py \
-    --SERVER_NAME='amazon'
+    --SERVICE_NAME='amazon'
     --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' \
     --SECRET='xxxxxxxxxxxxxxxxxxxx' \
     --REGION='bucket-region' \
@@ -147,7 +147,7 @@ To backup PostgreSQL, run the following::
 To archive PostgreSQL backups, run the following::
 
     $ postgres_to_s3.py \
-    --SERVER_NAME='amazon'
+    --SERVICE_NAME='amazon'
     --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' \
     --SECRET='xxxxxxxxxxxxxxxxxxxx' \
     --REGION='bucket-region' \
@@ -158,7 +158,7 @@ To archive PostgreSQL backups, run the following::
 To backup Redis, run the following::
 
     $ redis_to_s3.py \
-    --SERVER_NAME='amazon'
+    --SERVICE_NAME='amazon'
     --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' \
     --SECRET='xxxxxxxxxxxxxxxxxxxx' \
     --REGION='bucket-region' \
@@ -172,7 +172,7 @@ To backup Redis, run the following::
 To archive Redis, run the following::
 
     $ redis_to_s3.py \
-    --SERVER_NAME='amazon'
+    --SERVICE_NAME='amazon'
     --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' \
     --SECRET='xxxxxxxxxxxxxxxxxxxx' \
     --REGION='bucket-region' \
@@ -185,7 +185,7 @@ To archive Redis, run the following::
 To backup MySQL, run the following::
 
     $ mysql_to_s3.py \
-    --SERVER_NAME='amazon'
+    --SERVICE_NAME='amazon'
     --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' \
     --SECRET='xxxxxxxxxxxxxxxxxxxx' \
     --REGION='bucket-region' \
@@ -196,7 +196,7 @@ To backup MySQL, run the following::
 To archive MySQL, run the following::
 
     $ mysql_to_s3.py \
-    --SERVER_NAME='amazon'
+    --SERVICE_NAME='amazon'
     --ACCESS_KEY='xxxxxxxxxxxxxxxxxxxx' \
     --SECRET='xxxxxxxxxxxxxxxxxxxx' \
     --REGION='bucket-region' \
