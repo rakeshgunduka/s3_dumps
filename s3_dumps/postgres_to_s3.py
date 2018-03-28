@@ -5,14 +5,13 @@ from s3_dumps.connect import s3Connect
 from s3_dumps.archive import Archive
 
 import os
+import sys
 import argparse
-import subprocess
 
 import s3_dumps.utils as utils
 
 import logging
 import tarfile
-import tempfile
 
 logger = logging.getLogger('s3_dumps')
 logger.setLevel(logging.DEBUG)
@@ -29,17 +28,12 @@ def create_db_dump(command, filename):
 
     logger.info('Preparing ' + filename + '.sql from the database dump ...')
     logger.info('Executing: %s', command)
-    with tempfile.NamedTemporaryFile() as temp1:
-        ps = subprocess.Popen(
-            command,
-            stdout=temp1, shell=True, universal_newlines=True
-        )
-        ps.wait()
-        temp1.flush()
-
-        tar = tarfile.open(DUMP_BASE_DIR + filename + '.tar.gz', 'w|gz')
-        tar.add(temp1.name, filename + '.sql')
-        tar.close()
+    ret = os.system(command)
+    if ret != 0:
+        sys.exit(ret)
+    tar = tarfile.open(DUMP_BASE_DIR + filename + '.tar.gz', 'w|gz')
+    tar.add(DUMP_BASE_DIR + filename + '.sql', filename + '.sql')
+    tar.close()
     logger.info('Created tar file ' + filename + '.tar.gz')
     return '{}{}.tar.gz'.format(DUMP_BASE_DIR, filename)
 
@@ -52,16 +46,12 @@ def backup():
     archive_name = DB_NAME + '_db' if DB_NAME else ARCHIVE_NAME
     filename = archive_name + now.strftime('_%Y%m%d_%H%M%S')
     if DB_NAME:
-        command = [
-            POSTGRES_DUMP_CMD,
-            '-Fc', DB_NAME,
-            '-f', DUMP_BASE_DIR + filename + '.sql'
-        ]
+        command = '{0} -Fc {1} -f {2}'.format(POSTGRES_DUMP_CMD,
+                                              DB_NAME,
+                                              DUMP_BASE_DIR + filename + '.sql')
     else:
-        command = [
-            POSTGRES_DUMP_CMD + 'all',
-            '-f', DUMP_BASE_DIR + filename + '.sql'
-        ]
+        command = '{0} -f {2}'.format(POSTGRES_DUMP_CMD + 'all',
+                                      DUMP_BASE_DIR + filename + '.sql')
 
     file_location = create_db_dump(command, filename)
     file_key_suffix = utils.get_file_key(file_key=FILE_KEY, db_name=DB_NAME)
@@ -94,7 +84,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--POSTGRES_DUMP_CMD',
                         default='pg_dump',
-                        help='''Path to pg_dumpall (default: pg_dump).
+                        help='''Path to pg_dump (default: pg_dump).
                         You may change according to system
                         Eg. /usr/bin/pg_dump''')
 

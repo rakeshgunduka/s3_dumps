@@ -5,14 +5,13 @@ from s3_dumps.connect import s3Connect
 from s3_dumps.archive import Archive
 
 import os
+import sys
 import argparse
-import subprocess
 
 import s3_dumps.utils as utils
 
 import logging
 import tarfile
-import tempfile
 
 logger = logging.getLogger('s3_dumps')
 
@@ -27,18 +26,15 @@ def create_db_dump(command, filename):
         os.mkdir(DUMP_BASE_DIR)
 
     logger.info("Preparing " + filename + ".sql from the database dump ...")
-    with tempfile.NamedTemporaryFile() as temp1:
-        ps = subprocess.Popen(
-            command,
-            stdout=temp1, shell=True, universal_newlines=True
-        )
-        ps.wait()
-        temp1.flush()
-
-        tar = tarfile.open(DUMP_BASE_DIR + filename + ".tar.gz", "w|gz")
-        tar.add(temp1.name, filename + ".sql")
-        tar.close()
-    logger.info("Created tar file " + filename + ".tar.gz")
+    logger.info('Preparing ' + filename + '.sql from the database dump ...')
+    logger.info('Executing: %s', command)
+    ret = os.system(command)
+    if ret != 0:
+        sys.exit(ret)
+    tar = tarfile.open(DUMP_BASE_DIR + filename + '.tar.gz', 'w|gz')
+    tar.add(DUMP_BASE_DIR + filename + '.sql', filename + '.sql')
+    tar.close()
+    logger.info('Created tar file ' + filename + '.tar.gz')
     return '{}{}.tar.gz'.format(DUMP_BASE_DIR, filename)
 
 
@@ -48,24 +44,12 @@ def backup():
     archive_name = DB_NAME + '_db' if DB_NAME else ARCHIVE_NAME
     filename = archive_name + now.strftime('_%Y%m%d_%H%M%S')
 
+    command = '{0} -h {1} -u {2} -p {3}'.format(MYSQL_DUMP_CMD, MYSQL_HOST,
+                                                MYSQL_USER, MYSQL_PASSWORD)
     if DB_NAME:
-        command = [
-            MYSQL_DUMP_CMD,
-            '-h', MYSQL_HOST,
-            '-u', MYSQL_USER,
-            '-p', MYSQL_PASSWORD,
-            '--databases', DB_NAME,
-            '>', DUMP_BASE_DIR + filename + ".sql"
-        ]
+        command += ' --databases {4} > {5}'.format(DB_NAME, DUMP_BASE_DIR + filename + '.sql')
     else:
-        command = [
-            MYSQL_DUMP_CMD,
-            '-h', MYSQL_HOST,
-            '-u', MYSQL_USER,
-            '-p', MYSQL_PASSWORD,
-            '--all-databases',
-            '>', DUMP_BASE_DIR + filename + ".sql"
-        ]
+        command += ' --all-databases > {5}'.format(DUMP_BASE_DIR + filename + '.sql')
 
     file_location = create_db_dump(command, filename)
     file_key_suffix = utils.get_file_key(file_key=FILE_KEY, db_name=DB_NAME)
