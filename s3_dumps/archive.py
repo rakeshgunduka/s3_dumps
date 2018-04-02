@@ -58,7 +58,7 @@ class Archive(object):
                     obj.delete()
 
     def remove_key(self, obj):
-        delta = datetime.now().astimezone(pytz.utc) - obj.last_modified
+        delta = datetime.now().replace(tzinfo=pytz.utc) - obj.last_modified
         week_delta = timedelta(days=7)
         month_delta = timedelta(days=30)
 
