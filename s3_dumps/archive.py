@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
-from dateutil import tz
 
 import s3_dumps.utils as utils
 
+import pytz
 import os
 import re
 import logging
@@ -57,7 +57,7 @@ class Archive(object):
                     obj.delete()
 
     def remove_key(self, obj):
-        delta = datetime.now().astimezone(tz=tz.tzutc()) - obj.last_modified
+        delta = datetime.now().astimezone(pytz.utc) - obj.last_modified
         week_delta = timedelta(days=7)
         month_delta = timedelta(days=30)
 
