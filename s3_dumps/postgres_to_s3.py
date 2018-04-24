@@ -50,7 +50,7 @@ def backup():
                                               DB_NAME,
                                               DUMP_BASE_DIR + filename + '.sql')
     else:
-        command = '{0} -f {2}'.format(POSTGRES_DUMP_CMD + 'all',
+        command = '{0} -f {1}'.format(POSTGRES_DUMP_CMD + 'all',
                                       DUMP_BASE_DIR + filename + '.sql')
 
     file_location = create_db_dump(command, filename)
