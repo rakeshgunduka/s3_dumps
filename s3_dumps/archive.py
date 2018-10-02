@@ -76,7 +76,7 @@ class Archive(object):
                 logger.info('%s - Keeping object \"%s\" because it\'s older than one week but less than a month and it\'s an even day.' % (delta, obj.key))
                 return False
         elif delta > month_delta:
-            if obj.month_delta.day == 1:
+            if obj.last_modified.day == 1:
                 logger.info('%s - Keeping object \"%s\" because it\'s older than a month and also the first day of the month.' % (delta, obj.key))
                 return False
             else:
