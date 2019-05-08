@@ -54,8 +54,7 @@ class s3Connect:
         try:
             buck.put_object(
                 Key=file_key,
-                Body=open(media_location, 'rb'),
-                ACL='public-read')
+                Body=open(media_location, 'rb'))
             logger.info('Uploaded file key {}.'.format(file_key))
         except Exception as e:
             logger.info('Error: ', e)
