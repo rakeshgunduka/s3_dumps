@@ -28,7 +28,7 @@ class Archive(object):
     def archive(self):
         buck = self.conn.Bucket(self.bucket)
         for obj in buck.objects.filter(Prefix=self.file_key_suffix):
-            p = re.compile('\d{4}\/\d{1,2}\/\d{1,2}')
+            p = re.compile(r'\d{4}\/\d{1,2}\/\d{1,2}')
             if not p.findall(obj.key):
                 name_parts = obj.key.split('/')
                 month = name_parts[-2]
