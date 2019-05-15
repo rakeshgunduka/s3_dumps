@@ -65,8 +65,9 @@ def backup():
 
     if DELETE_DUMP:
         os.remove(file_location)
-        logger.info('''Removed the dump from local directory ({}).'''.format(
-            file_location))
+        os.remove(DUMP_BASE_DIR + filename + '.sql')
+        logger.info('''Removed the dump from local directory ({}, {}).'''.format(
+            DUMP_BASE_DIR + filename + '.sql', file_location))
 
     logger.info('Sucessfully uploaded the Dump.')
 
