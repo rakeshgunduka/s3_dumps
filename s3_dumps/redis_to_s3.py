@@ -87,6 +87,7 @@ if __name__ == '__main__':
     REDIS_DUMP_DIR = args.REDIS_DUMP_DIR
     REDIS_SAVE_CMD = args.REDIS_SAVE_CMD
     ARCHIVE_NAME = args.ARCHIVE_NAME
+    DELETE_DUMP = args.DELETE_DUMP
 
     conn = s3Connect(access_key_id=ACCESS_KEY, secret_access_key=SECRET, region=REGION, service_name=SERVICE_NAME)
 
