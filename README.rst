@@ -64,6 +64,14 @@ Set --SERVICE_NAME to 'digitalocean'.
 
     --SERVICE_NAME='digitalocean'
 
+To delete dump after backup.
+'''''''''''''''''''''''''''''''''
+Set --DELETE_DUMP to True.
+
+::
+
+    --DELETE_DUMP=True
+
 
 Setting Up S3 Dumps to Run Automatically Using Cron
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -57,6 +57,10 @@ def backup():
         file_key=file_key
     )
 
+    if DELETE_DUMP:
+        os.remove(file_location)
+        logger.info('''Removed the dump from local directory ({}).'''.format(file_location))
+
     logger.info('Sucessfully uploaded the Dump.')
 
 
