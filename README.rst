@@ -19,7 +19,7 @@ Installation
 
 To install s3-backups::
 
-    $ sudo pip install s3_dumps
+    $ sudo pip install s3-dumps
 
 Usage
 -----
