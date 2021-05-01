@@ -10,13 +10,15 @@ setup(
     version=__import__('s3_dumps').__version__,
     description='A package for backup DB and store in s3',
     long_description='For more information visit: http://s3-dumps.readthedocs.io/en/latest/',
+    long_description_content_type='text/plain',
     author='Reck31',
     author_email='rakesh.gunduka@gmail.com',
     url='https://github.com/rakeshgunduka/s3_dumps',
     license='MIT',
     include_package_data=True,
     install_requires=[
-        "boto3"
+        'boto3',
+        'pytz'
     ],
     classifiers=[
         'Development Status :: 1 - Planning',
