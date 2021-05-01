@@ -49,7 +49,6 @@ class Archive(object):
                     obj.delete()
                 elif obj.key != new_key_name:
                     logger.info('Archiving object to {new_key}'.format(
-                        key=obj.key,
                         new_key=new_key_name,
                     ))
                     copy_source = {'Bucket': obj.bucket_name, 'Key': obj.key}

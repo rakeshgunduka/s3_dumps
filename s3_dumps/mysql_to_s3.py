@@ -47,9 +47,9 @@ def backup():
     command = '{0} -h {1} -u {2} -p {3}'.format(MYSQL_DUMP_CMD, MYSQL_HOST,
                                                 MYSQL_USER, MYSQL_PASSWORD)
     if DB_NAME:
-        command += ' --databases {4} > {5}'.format(DB_NAME, DUMP_BASE_DIR + filename + '.sql')
+        command += ' --databases {0} > {1}'.format(DB_NAME, DUMP_BASE_DIR + filename + '.sql')
     else:
-        command += ' --all-databases > {5}'.format(DUMP_BASE_DIR + filename + '.sql')
+        command += ' --all-databases > {0}'.format(DUMP_BASE_DIR + filename + '.sql')
 
     file_location = create_db_dump(command, filename)
     file_key_suffix = utils.get_file_key(file_key=FILE_KEY, db_name=DB_NAME)
